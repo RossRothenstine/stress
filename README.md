@@ -9,7 +9,7 @@ stresser := &stress.Stresser{
 	New: func() stress.Worker {
 		return &MyStressWorker{}
 	},
-	Limit: rate.NewLimiter(eventsPerSecond, eventsPerSecond)
+	Limit: rate.NewLimiter(eventsPerSecond, eventsPerSecond),
 }
 
 go stresser.Start()
