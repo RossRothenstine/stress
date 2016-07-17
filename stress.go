@@ -68,15 +68,10 @@ func (s *Stresser) doWork() {
 			for _, w := range s.workers {
 				go func() {
 					defer wg.Done()
-					r := s.Limit.Reserve()
-					if r.OK() {
-						ok := s.Limit.Allow()
-						if !ok {
-							r.Cancel()
-							return
-						}
+					ok := s.Limit.Allow()
+					if !ok {
+						return
 					}
-					time.Sleep(r.Delay())
 					w.Work(s.Context)
 					events++
 				}()
