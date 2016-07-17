@@ -62,22 +62,26 @@ func (s *Stresser) doWork() {
 			}
 			return
 		default:
+
 			wg := sync.WaitGroup{}
 			wg.Add(len(s.workers))
 			// Run a single unit of work on all workers
 			for _, w := range s.workers {
 				go func() {
 					defer wg.Done()
-					ok := s.Limit.Allow()
-					if !ok {
-						return
+					r := s.Limit.Reserve()
+					if r.OK() {
+						time.Sleep(r.Delay())
+						w.Work(s.Context)
+						events++
 					}
-					w.Work(s.Context)
-					events++
 				}()
 			}
 			wg.Wait()
-
+			if events >= int(s.Limit.Limit()) {
+				s.Limit.Wait(s.Context)
+				return
+			}
 		}
 	}
 }

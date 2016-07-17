@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"gitlab.com/Butabah/stress"
+	"github.com/RossRothenstine/stress"
 	"golang.org/x/net/context"
 	"golang.org/x/time/rate"
 )
