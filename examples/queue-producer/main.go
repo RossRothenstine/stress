@@ -6,8 +6,8 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/RossRothenstine/stress"
 	"github.com/streadway/amqp"
-	"gitlab.com/Butabah/stress"
 	"golang.org/x/net/context"
 	"golang.org/x/time/rate"
 )
